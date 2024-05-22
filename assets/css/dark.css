@@ -1,0 +1,603 @@
+:root {
+    --main-bg-color: #222; /* Fundo escuro principal */
+    --navbar-bg-color: #4eb3de; /* Cor da navbar (mantida do tema original) */
+    --navbar-text-color: white;
+    --task-list-bg-color: #333; /* Fundo escuro para a lista de tarefas */
+    --task-list-border-color: #555; /* Borda mais escura para a lista */
+    --add-btn-bg-color: #4eb3de;
+    --add-btn-hover-color: #4196bb;
+    --task-checkbox-border-color: #777; /* Borda mais escura para checkbox */
+    --task-checkbox-checked-bg-color: #4eb3de;
+    --task-checkbox-checked-symbol-color: #222; /* Símbolo escuro no checkbox marcado */
+    --task-label-color: #eee; /* Texto claro para as tarefas */
+    --edit-input-border-color: #4eb3de;
+    --edit-input-focus-border-color: #4eb3de;
+    --edit-input-focus-box-shadow-color: rgba(0, 153, 58, 0.2); /* Sombra mais escura para input focado */
+    --edit-btn-bg-color: #ce9a00;
+    --edit-btn-hover-color: #9c7500;
+    --remove-btn-bg-color: #dc3545;
+    --remove-btn-hover-color: #c82333;
+    --hint-card-bg-color: #444; /* Fundo escuro para o hint card */
+    --hint-card-border-color: #4eb3de; /* Borda na cor da navbar */
+    --hint-card-text-color: #eee; /* Texto claro no hint card */
+    --close-btn-color: #eee;
+    --dropdown-bg: #333; /* Fundo escuro para o dropdown */
+    --dropdown-btn-bg: #444; /* Fundo escuro para os botões do dropdown */
+    --dropdown-btn-hover-bg: #555; /* Fundo mais escuro ao passar o mouse nos botões do dropdown */
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--main-bg-color);
+    color: var(--task-label-color); 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: var(--navbar-bg-color);
+    color: var(--navbar-text-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar .nav-links li {
+    display: inline;
+}
+
+.navbar .nav-links a {
+    color: var(--navbar-text-color);
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza horizontalmente em telas maiores */
+    align-self: center; /* Centraliza horizontalmente em flex containers */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    margin: 0; /* Remove margem padrão do h2 */
+}
+
+h3 {
+    display: none;
+}
+
+#search-task {
+    flex-grow: 1; /* Ocupa todo o espaço disponível */
+    max-width: 100%; /* Define a largura máxima como 150 pixels */
+    margin-left: 20px;
+    margin-right: 10px;
+    padding: 8px; /* Adiciona preenchimento interno ao campo de busca */
+    border: 1px solid #ccc; /* Adiciona uma borda ao campo de busca */
+    border-radius: 6px; /* Adiciona bordas arredondadas ao campo de busca */
+    outline: none; /* Remove o contorno do campo de busca quando está focado */
+}
+
+.task-list {
+    background-color: var(--task-list-bg-color);
+    padding: 2rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-list h2 {
+    margin-top: 0;
+}
+
+.task-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.task-list .task-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--task-list-border-color);
+}
+
+.task-list .task-item:last-child {
+    border-bottom: none;
+}
+
+.task-list .task-item label {
+    margin-left: 0.5rem;
+}
+
+.add-task-btn {
+    background-color: var(--add-btn-bg-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.add-task-btn:hover {
+    background-color: var(--add-btn-hover-color);
+}
+
+.task-checkbox {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border: 2px solid var(--task-checkbox-border-color);
+}
+
+.task-checkbox:checked {
+    background-color: var(--task-checkbox-checked-bg-color); 
+    border: 2px solid var(--task-checkbox-checked-border-color);
+}
+
+/* Pseudo-elemento para o símbolo de marcação */
+.task-checkbox:checked::after {
+    content: "✓"; /* Adiciona o conteúdo ao pseudo-elemento */
+    font-size: 22px;
+    position: absolute; /* Posiciona o elemento absolutamente */
+    top: 40%; /* Posiciona o elemento na metade superior do checkbox */
+    left: 55%; /* Posiciona o elemento na metade esquerda do checkbox */
+    transform: translate(-50%, -50%); /* Move o elemento para o centro do checkbox */
+    width: 18px; /* Largura do símbolo de marcação */
+    height: 18px; /* Altura do símbolo de marcação */
+    border-radius: 50%; /* Torna o símbolo de marcação redondo */
+    color: var(--task-checkbox-checked-symbol-color);
+    animation: checkboxBounce 0.4s ease;
+}
+
+.task-item.completed label {
+    text-decoration: line-through;
+    color: var(--task-label-color);
+}
+
+#new-task-input {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.task-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--task-list-border-color);
+    justify-content: space-between;
+    animation: slideIn 0.3s ease-out; /* Adiciona a animação de entrada */
+    transition: opacity 0.3s ease, height 0.3s ease; /* Adiciona a transição */
+}
+
+.task-item:hover {
+    /* Adiciona um efeito de destaque ao passar o mouse sobre a tarefa */
+    background-color: rgba(0,0,0,0.1);
+}
+
+.task-item label {
+    flex-grow: 1;
+    padding-left: 18px;
+    padding-top: 6px;
+}
+
+.edit-task-input {
+    flex-grow: 1;
+    width: calc(100% - 4rem); /* Subtrai o padding total de 1rem de cada lado */
+    border: 1px solid var(--edit-input-border-color);
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.edit-task-input:focus {
+    border-color: var(--edit-input-focus-border-color);
+    box-shadow: 0 0 0 2px var(--edit-input-focus-box-shadow-color);
+}
+
+.edit-task-btn {
+    background-color: var(--edit-btn-bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    border-radius: 6px;
+    color: white;
+}
+
+.edit-task-btn:hover {
+    background-color: var(--edit-btn-hover-color);
+}
+
+.remove-task-btn {
+    background-color: var(--remove-btn-bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    border-radius: 6px;
+    color: white;
+    transition: opacity 0.5s ease;
+}
+
+.remove-task-btn:hover {
+    background-color: var(--remove-btn-hover-color);
+}
+
+.removing {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.editing .task-checkbox {
+    display: none;
+}
+
+.task-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="search"],
+input[type="file"],
+textarea {
+    background-color: var(--task-list-bg-color); /* Fundo escuro */
+    color: var(--task-label-color); /* Texto claro */
+    border: 1px solid var(--task-list-border-color); /* Borda escura */
+    padding: 8px;
+    border-radius: 6px;
+    outline: none;
+}
+
+#new-task-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid var(--task-list-border-color); /* Borda escura */
+    border-radius: 6px;
+    margin-right: 10px;
+    outline: none;
+    background-color: var(--task-list-bg-color); /* Fundo escuro */
+    color: var(--task-label-color); /* Texto claro */
+}
+
+.add-task-btn {
+    padding: 8px 16px;
+    border: none;
+    background-color: var(--add-btn-bg-color);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+}
+
+.add-task-btn:hover {
+    background-color: var(--add-btn-hover-color);
+}
+
+.hint-card {
+    background-color: var(--hint-card-bg-color);
+    border: 1px solid rgba(102, 102, 102, 0.2);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: fadeIn 0.5s ease;
+}
+
+.hint-card p {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--close-btn-color);
+}
+
+.hint-card.closing {
+    animation: fadeOut 0.5s ease forwards;
+}
+
+/* Estilos para o botão principal */
+.dropdown button {
+    background-color: #5e5e5e;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown button:hover {
+    background-color: #505050;
+}
+
+/* Estilos para o container do dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilos para o conteúdo do dropdown */
+.dropdown-content {
+    display: none; /* Esconde o conteúdo por padrão */
+    position: absolute;
+    background-color: #5e5e5e;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 6px;
+    z-index: 1; /* Garante que o dropdown fique por cima de outros elementos */
+    right: 100%;
+    top: 0;
+}
+
+/* Estilos para os botões dentro do dropdown */
+.dropdown-content button {
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block; /* Faz os botões ocuparem toda a largura do dropdown */
+    width: 100%;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+}
+
+.dropdown-content button:hover {
+    background-color: #505050;
+}
+
+.dropdown button::after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    margin-left: 5px;
+}
+
+/* Exibe o dropdown ao passar o mouse sobre o botão principal */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.import-export-buttons {
+    display: flex;
+    gap: 10px; /* Espaçamento entre botões */
+    padding: 8px;
+    align-items: center; 
+}
+
+.import-export-buttons button {
+    background-color: #e4e4e4; /* Cinza claro de fundo */
+    border: none; /* Sem bordas */
+    padding: 10px 15px; /* Ajuste sutil no padding */
+    font-size: 12px;
+    color: #333; /* Texto cinza escuro */
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Efeito suave na transição */
+}
+
+.import-export-buttons button:hover {
+    background-color: #d6d6d6; /* Cinza um pouco mais escuro ao passar o mouse */
+}
+
+#theme-btn:hover {
+    background-color: #4eb3de;
+ }
+
+.empty-message {
+    bottom: 20px;
+    right: 20px;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    text-align: center;
+    display: none; /* Inicialmente oculto */
+}
+
+.empty-message p {
+    margin: 0;
+    font-size: 18px;
+    color: #b6b6b6;
+}
+
+@keyframes checkboxBounce {
+    0% {
+        transform: translate(-50%, -50%) scale(1); /* Escala inicial */
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2); /* Escala aumentada no meio da animação */
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1); /* Retorno à escala inicial */
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animação de saída */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.empty-list-image {
+    width: 60%;
+    height: auto;
+    margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+    .header h2 {
+        white-space: nowrap; /* Impede a quebra de linha */
+        overflow: hidden;    /* Esconde o texto que excede a largura */
+        text-overflow: ellipsis; /* Adiciona "..." ao final do texto truncado */
+    }
+    
+    .empty-list-image {
+        width: 80%;
+    }
+}
+
+@media (max-width: 520px) {
+    .header h2 {
+        display: none;
+    }
+
+    #search-task {
+        margin-left: 0px;
+        margin-right: 10px;
+    }
+
+    h3 {
+        display: block;
+    }
+
+    .empty-list-image {
+        width: 100%;
+    }
+}
+
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Garante que o carregador fique por cima de outros elementos */
+}
+  
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3; /* Cor da borda */
+    border-top: 4px solid #3498db; /* Cor da parte animada */
+    border-radius: 50%;
+    animation: spin 2s linear infinite; /* Animação de giro */
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#new-task-input,
+#search-task {
+    background-color: var(--task-list-bg-color); /* Fundo escuro para os inputs */
+    color: var(--task-label-color); /* Cor do texto dos inputs */
+    border-color: var(--task-list-border-color); /* Borda dos inputs */
+}
+
+.import-export-buttons button {
+    background-color: var(--dropdown-btn-bg); /* Cor de fundo dos botões */
+    color: var(--task-label-color); /* Cor do texto dos botões */
+}
+
+.import-export-buttons button:hover {
+    background-color: var(--dropdown-btn-hover-bg); /* Cor de fundo ao passar o mouse nos botões */
+}
+
+.empty-message {
+    background-color: var(--task-list-bg-color); /* Cor de fundo da mensagem */
+    color: var(--task-label-color); /* Cor do texto da mensagem */
+}
